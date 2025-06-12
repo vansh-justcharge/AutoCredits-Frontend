@@ -14,7 +14,7 @@ export default function AddCar({ isOpen, onClose, onCarAdded }: AddCarProps) {
     customerContact: '',
     purchaseDate: '',
     paymentStatus: 'Completed',
-    make: '',
+    Brand: '',
     model: '',
     year: '',
     price: '',
@@ -143,11 +143,11 @@ export default function AddCar({ isOpen, onClose, onCarAdded }: AddCarProps) {
             <h3 className="text-lg font-medium mb-2">Car Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Make</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Brand</label>
                 <input
                   type="text"
-                  value={formData.make}
-                  onChange={(e) => handleInputChange('make', e.target.value)}
+                  value={formData.Brand}
+                  onChange={(e) => handleInputChange('Brand', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md"
                 />
               </div>
