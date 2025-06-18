@@ -32,11 +32,28 @@ export default function ViewCarModal({ isOpen, onClose, car }: ViewCarModalProps
                             <div><p><strong>Payment Status:</strong> {car.paymentStatus}</p></div>
                         </div>
                     </div>
+                    <div>
+                        <h3 className="text-lg font-bold mb-4">Car Images</h3>
+                        <div className='flex m-2'>
+                                {Array.isArray(car.images) && car.images.length > 0 ? (
+                                    car.images.map((img, idx) => (
+                                        <img
+                                            key={idx}
+                                            src={img.url}
+                                            alt={img.alt || 'Car'}
+                                            className="mb-4 max-h-56 mr-6 "
+                                        />
+                                    ))
+                                ) : (
+                                    <span>No images available</span>
+                                )}
+                            </div>
+                    </div>
 
                     <div className="mb-6">
                         <h3 className="text-lg font-medium mb-2">Car Details</h3>
                         <div className="grid grid-cols-2 gap-6">
-                            <div><p><strong>Brand:</strong> {car.make}</p></div>
+                            <div><p><strong>Brand:</strong> {car.Brand}</p></div>
                             <div><p><strong>Model:</strong> {car.model}</p></div>
                             <div><p><strong>Year:</strong> {car.year}</p></div>
                             <div><p><strong>Price:</strong> ${car.price.toLocaleString()}</p></div>

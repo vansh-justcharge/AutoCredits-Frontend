@@ -8,6 +8,7 @@ import AddCar from "./AddCar"
 import EditCarModal from "./EditCarModal"
 import ViewCarModal from "./ViewCarModal"
 
+
 const InventoryPage: React.FC = () => {
   const [cars, setCars] = useState<Car[]>([])
   const [loading, setLoading] = useState(true)
@@ -52,7 +53,7 @@ const InventoryPage: React.FC = () => {
       // Search by customer name
       const matchesSearch = searchQuery === "" || car.customerName.toLowerCase().includes(searchQuery.toLowerCase())
 
-      const matchesBrand = filterBrand === "" || car.make.toLowerCase() === filterBrand.toLowerCase()
+      const matchesBrand = filterBrand === "" || car.Brand.toLowerCase() === filterBrand.toLowerCase()
       const matchesStatus = filterStatus === "" || car.status.toLowerCase() === filterStatus.toLowerCase()
       const matchesColor = filterColor === "" || car.color?.toLowerCase().includes(filterColor.toLowerCase())
       const matchesPrice =
@@ -219,7 +220,6 @@ const InventoryPage: React.FC = () => {
                 <option value="Toyota">Toyota</option>
                 <option value="Honda">Honda</option>
                 <option value="Ford">Ford</option>
-                <option value="Vansh test">Vansh test</option>
               </select>
 
               {/* Status Filter */}
@@ -334,7 +334,7 @@ const InventoryPage: React.FC = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       {car.customerName}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{car.make}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{car.Brand}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{car.carNumber}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{car.model}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{car.year}</td>
