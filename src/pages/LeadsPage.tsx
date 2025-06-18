@@ -48,14 +48,12 @@ const LeadsPage: React.FC = () => {
       setError(null)
       const response = await leadsAPI.getLeads()
       if (response.status === "success" && response.data.leads.data) {
-        console.log("📋 Fetched leads:", response.data.leads.data)
         setLeads(response.data.leads.data)
       } else {
         setError("Invalid response format from server")
         setLeads([])
       }
     } catch (err: any) {
-      console.error("❌ Fetch leads error:", err)
       setError(err.response?.data?.message || "Failed to fetch leads")
       setLeads([])
     } finally {
@@ -84,19 +82,14 @@ const LeadsPage: React.FC = () => {
   const handleViewDetails = async (lead: Lead) => {
     try {
       setModalError(null)
-      console.log("🔍 Viewing lead details for ID:", lead._id)
       const response = await leadsAPI.getLead(lead._id)
       if (response.status === "success" && response.data.lead) {
-        console.log("✅ Lead details response:", response.data.lead)
-        console.log("🎯 AssignedTo field:", response.data.lead.assignedTo)
-        console.log("🎯 AssignedTo type:", typeof response.data.lead.assignedTo)
         setSelectedLead(response.data.lead)
         setIsDetailModalOpen(true)
       } else {
         setModalError("Failed to fetch lead details")
       }
     } catch (err: any) {
-      console.error("❌ View details error:", err)
       setModalError(err.response?.data?.message || "Failed to fetch lead details")
     }
   }
@@ -108,10 +101,6 @@ const LeadsPage: React.FC = () => {
       if (response.status === "success" && response.data.lead) {
         // Convert assignedTo object to ID string for the form
         const leadForEdit = { ...response.data.lead }
-
-        console.log("🔍 EDIT DEBUG - Original lead data:", leadForEdit)
-        console.log("🔍 EDIT DEBUG - Original assignedTo:", leadForEdit.assignedTo)
-        console.log("🔍 EDIT DEBUG - assignedTo type:", typeof leadForEdit.assignedTo)
 
         // Handle assignedTo conversion for the form
         if (leadForEdit.assignedTo) {
@@ -127,8 +116,6 @@ const LeadsPage: React.FC = () => {
           leadForEdit.assignedTo = ""
         }
 
-        console.log("🔍 EDIT DEBUG - Processed assignedTo for form:", leadForEdit.assignedTo)
-        console.log("✏️ Lead for editing:", leadForEdit)
         setEditingLead(leadForEdit)
         setIsEditModalOpen(true)
       } else {
@@ -159,10 +146,6 @@ const LeadsPage: React.FC = () => {
       setModalError(null)
 
       // Debug the assignedTo field specifically
-      console.log("🔍 FRONTEND UPDATE DEBUG - editingLead object:", editingLead)
-      console.log("🔍 assignedTo field:", editingLead.assignedTo)
-      console.log("🔍 assignedTo type:", typeof editingLead.assignedTo)
-      console.log("🔍 assignedTo length:", editingLead.assignedTo?.length)
 
       // Clean up the data before sending
       const leadDataToSend = {
@@ -170,34 +153,25 @@ const LeadsPage: React.FC = () => {
         // Properly handle assignedTo field
         assignedTo: (() => {
           const assignedTo = editingLead.assignedTo
-          console.log("🔍 Processing assignedTo:", assignedTo)
 
           // If it's an empty string or null/undefined, set to null
           if (!assignedTo || assignedTo.toString().trim() === "") {
-            console.log("🔍 Setting assignedTo to null (empty)")
             return null
           }
 
           // If it's a valid string, use it
           const trimmedValue = assignedTo.toString().trim()
-          console.log("🔍 Setting assignedTo to:", trimmedValue)
           return trimmedValue
         })(),
       }
 
-      console.log("💾 Sending update data:", leadDataToSend)
-      console.log("💾 assignedTo being sent:", leadDataToSend.assignedTo)
-
       const response = await leadsAPI.updateLead(editingLead._id, leadDataToSend)
       if (response.status === "success" && response.data.lead) {
-        console.log("✅ Lead updated successfully:", response.data.lead)
-        console.log("✅ Updated assignedTo field:", response.data.lead.assignedTo)
         setLeads(leads.map((lead) => (lead._id === editingLead._id ? response.data.lead : lead)))
         setIsEditModalOpen(false)
         setEditingLead(null)
       }
     } catch (err: any) {
-      console.error("❌ Update lead error:", err)
       setModalError(err.response?.data?.message || "Failed to update lead")
     } finally {
       setIsSubmitting(false)
@@ -229,13 +203,6 @@ const LeadsPage: React.FC = () => {
         return
       }
 
-      // Debug the assignedTo field specifically
-      console.log("🔍 FRONTEND DEBUG - newLead object:", newLead)
-      console.log("🔍 assignedTo field:", newLead.assignedTo)
-      console.log("🔍 assignedTo type:", typeof newLead.assignedTo)
-      console.log("🔍 assignedTo length:", newLead.assignedTo?.length)
-      console.log("🔍 assignedTo trimmed:", newLead.assignedTo?.trim())
-
       // Clean up the data before sending
       const leadDataToSend = {
         ...newLead,
@@ -243,18 +210,17 @@ const LeadsPage: React.FC = () => {
         assignedTo: newLead.assignedTo && newLead.assignedTo.trim() !== "" ? newLead.assignedTo.trim() : null,
       }
 
-      console.log("➕ Sending lead data:", leadDataToSend)
-      console.log("➕ assignedTo being sent:", leadDataToSend.assignedTo)
+    
 
       const response = await leadsAPI.createLead(leadDataToSend)
       if (response.status === "success" && response.data.lead) {
-        console.log("✅ Lead created successfully:", response.data.lead)
+        console.log("Lead created successfully:", response.data.lead)
         setLeads([response.data.lead, ...leads])
         setIsAddModalOpen(false)
         resetNewLeadForm()
       }
     } catch (err: any) {
-      console.error("❌ Create lead error:", err)
+      console.error("Create lead error:", err)
       setModalError(err.response?.data?.message || "Failed to create lead")
     } finally {
       setIsSubmitting(false)
@@ -329,7 +295,7 @@ const LeadsPage: React.FC = () => {
 
   const handleInputChange = (field: keyof Lead, value: string) => {
     if (editingLead) {
-      console.log(`🔍 INPUT CHANGE - Field: ${field}, Value: "${value}", Type: ${typeof value}`)
+     
 
       setEditingLead({
         ...editingLead,
@@ -338,7 +304,7 @@ const LeadsPage: React.FC = () => {
 
       // Log the updated state for assignedTo specifically
       if (field === "assignedTo") {
-        console.log(`🔍 Updated assignedTo in state: "${value}"`)
+        console.log(`Updated assignedTo in state: "${value}"`)
       }
     }
   }
@@ -352,21 +318,17 @@ const LeadsPage: React.FC = () => {
 
   // Fixed getUserName function with better error handling and fallbacks
   const getUserName = (userId: any): string => {
-    console.log("🔍 getUserName called with:", userId, "Type:", typeof userId)
 
     // Handle null, undefined, or empty values
     if (!userId) {
-      console.log("❌ No userId provided")
       return "Not assigned"
     }
 
     // If userId is an object (populated from backend)
     if (typeof userId === "object" && userId !== null) {
-      console.log("📦 UserId is object:", userId)
 
       // Check for name field first (most common case)
       if (userId.name && typeof userId.name === "string") {
-        console.log("✅ Found name field:", userId.name)
         return userId.name
       }
 
@@ -374,40 +336,32 @@ const LeadsPage: React.FC = () => {
       if (userId.firstName && typeof userId.firstName === "string") {
         const lastName = userId.lastName && typeof userId.lastName === "string" ? ` ${userId.lastName}` : ""
         const fullName = `${userId.firstName}${lastName}`
-        console.log("✅ Found firstName/lastName:", fullName)
         return fullName
       }
 
       // If it's an object but doesn't have expected properties, try to use the _id
       const objectId = userId._id || userId.id
       if (objectId) {
-        console.log("🔄 Using _id to lookup:", objectId)
         const user = demoUsers.find((u) => u.id === objectId.toString())
         if (user) {
-          console.log("✅ Found user by ID:", user.name)
           return user.name
         }
       }
 
       // Last resort: stringify the object to see what we have
-      console.log("⚠️ Object structure not recognized:", Object.keys(userId))
       return "Unknown User"
     }
 
     // If userId is a string (ObjectId)
     if (typeof userId === "string" && userId.trim() !== "") {
-      console.log("🔤 UserId is string:", userId)
+      console.log("UserId is string:", userId)
       const user = demoUsers.find((u) => u.id === userId.trim())
       if (user) {
-        console.log("🎯 Found user:", user.name)
         return user.name
       } else {
-        console.log("❌ No user found for ID:", userId)
         return "Unknown User"
       }
     }
-
-    console.log("❌ Could not resolve user name for:", userId)
     return "Not assigned"
   }
 

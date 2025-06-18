@@ -41,10 +41,11 @@ export default function AddCar({ isOpen, onClose, onCarAdded }: AddCarProps) {
     setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
+  const IMAGE_PRESET = import.meta.env.VITE_IMAGE_PRESET
+  const CLOUDINARY_URL = import.meta.env.VITE_CLOUDINARY_URL
+
   const handleImageUpload = async (index: number, event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
-    const IMAGE_PRESET = "Anodyne"
-    const CLOUD_NAME = "djgqvtvkz"
 
     if (file) {
       const formData = new FormData()
@@ -52,7 +53,7 @@ export default function AddCar({ isOpen, onClose, onCarAdded }: AddCarProps) {
       formData.append("upload_preset", IMAGE_PRESET)
 
       try {
-        const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+        const res = await fetch(CLOUDINARY_URL, {
           method: "POST",
           body: formData,
         })
