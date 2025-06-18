@@ -4,19 +4,19 @@ import { carsAPI } from '../services/api';
 
 interface Car {
   _id: string;
-  make: string;
+  Brand: string;
   model: string;
   year: number;
   price: number;
   mileage: number;
   vin: string;
-  condition: 'new' | 'used' | 'certified';
-  status: 'available' | 'sold' | 'reserved' | 'maintenance';
+  condition: 'new' | 'used';
+  status: 'available' | 'sold';
   customerName?: string;
   customerContact?: string;
   email?: string;
   purchaseDate?: string;
-  paymentStatus?: 'Completed' | 'Pending' | 'Failed';
+  paymentStatus?: 'Completed' | 'Pending';
   color?: string;
   carNumber?: string;
 }
@@ -84,22 +84,22 @@ export default function EditCarModal({ isOpen, onClose, car, onUpdate }: EditCar
               <InputField label="Contact Number" name="customerContact" value={formData.customerContact} onChange={handleInputChange} />
               <InputField label="Email" name="email" value={formData.email} onChange={handleInputChange} />
               <InputField label="Purchase date" name="purchaseDate" type="date" value={formData.purchaseDate} onChange={handleInputChange} />
-              <SelectField label="Payment status" name="paymentStatus" value={formData.paymentStatus} onChange={handleInputChange} options={['Completed', 'Pending', 'Failed']} />
+              <SelectField label="Payment status" name="paymentStatus" value={formData.paymentStatus} onChange={handleInputChange} options={['Completed', 'Pending']} />
             </div>
           </div>
 
           <div className="mb-6">
             <h3 className="text-lg font-medium mb-2">Car Details</h3>
             <div className="grid grid-cols-2 gap-6">
-              <InputField label="Brand" name="make" value={formData.make} onChange={handleInputChange} />
+              <InputField label="Brand" name="Brand" value={formData.Brand} onChange={handleInputChange} />
               <InputField label="Model" name="model" value={formData.model} onChange={handleInputChange} />
               <InputField label="Year" name="year" type="number" value={formData.year} onChange={handleInputChange} />
               <InputField label="Price" name="price" type="number" value={formData.price} onChange={handleInputChange} />
               <InputField label="Mileage" name="mileage" type="number" value={formData.mileage} onChange={handleInputChange} />
               <InputField label="Color" name="color" value={formData.color} onChange={handleInputChange} />
               <InputField label="Car Number" name="carNumber" value={formData.carNumber} onChange={handleInputChange} />
-              <SelectField label="Condition" name="condition" value={formData.condition} onChange={handleInputChange} options={['new', 'used', 'certified']} />
-              <SelectField label="Status" name="status" value={formData.status} onChange={handleInputChange} options={['available', 'sold', 'reserved', 'maintenance']} />
+              <SelectField label="Condition" name="condition" value={formData.condition} onChange={handleInputChange} options={['new', 'used']} />
+              <SelectField label="Status" name="status" value={formData.status} onChange={handleInputChange} options={['available', 'sold']} />
             </div>
           </div>
 

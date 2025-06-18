@@ -214,8 +214,8 @@ const EditLeadModal: React.FC<EditLeadModalProps> = ({ isOpen, onClose, lead, on
                 className="w-full border border-gray-300 rounded-lg px-3 py-2"
               >
                 <option value="New">New</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Closed">Closed</option>
+                <option value="sold">Sold</option>
+                {/* <option value="Closed">Closed</option> */}
               </select>
             </div>
 

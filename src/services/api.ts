@@ -19,8 +19,8 @@ interface Lead {
     lastName: string
     email: string
     phone: string
-    status: "new" | "contacted" | "qualified" | "proposal" | "negotiation" | "closed" | "lost"
-    source: "website" | "referral" | "walk-in" | "phone" | "email" | "social" | "other"
+    status: "new" | "old"
+    source: "reference" | "walk-in"
     service: string
     interest?: {
         car?: string
@@ -77,21 +77,21 @@ interface LeadResponse {
 
 interface Car {
     _id: string;
-    make: string;
+    Brand: string;
     model: string;
     year: number;
     price: number;
     mileage: number;
     vin: string;
-    condition: 'new' | 'used' | 'certified';
-    status: 'available' | 'sold' | 'reserved' | 'maintenance';
+    condition: 'new' | 'used';
+    status: 'available' | 'sold';
     features?: string[];
     images?: { url: string; alt: string }[];
     customerName?: string;
     customerContact?: string;
     email?: string;
     purchaseDate?: string;
-    paymentStatus?: 'Completed' | 'Pending' | 'Failed';
+    paymentStatus?: 'Completed' | 'Pending';
     color?: string;
     carNumber?: string;
     brand?: string;
